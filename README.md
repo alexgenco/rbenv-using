@@ -6,7 +6,7 @@ rbenv plugin to run a shell command with a specified Ruby version activated.
 
 ```shell
 mkdir -p $RBENV_ROOT/plugins
-git clone https://github.com/rkh/rbenv-whatis.git $RBENV_ROOT/plugins/rbenv-whatis
+git clone git@github.com:rkh/rbenv-whatis.git $RBENV_ROOT/plugins/rbenv-whatis
 git clone git@github.com:alexgenco/rbenv-using.git $RBENV_ROOT/plugins/rbenv-using
 ```
 
