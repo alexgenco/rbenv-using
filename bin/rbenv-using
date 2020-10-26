@@ -17,10 +17,10 @@ if ! which rbenv-whatis >/dev/null 2>&1; then
   exit 1
 fi
 
-if [ $# -eq 0 ]; then
+if [ $# -le 1 ]; then
   command rbenv help using >&2
   exit 1
 fi
 
 version=`command rbenv whatis "$1"`; shift
-RBENV_VERSION="$version" exec "$@"
+RBENV_VERSION="$version" exec -- "$@"
