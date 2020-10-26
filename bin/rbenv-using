@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#
+# Usage: rbenv using <version> <command>
+#
+# Run a shell command with a specified Ruby version activated.
+
+set -euo pipefail
+[ -n "${RBENV_DEBUG:-}" ] && set -x
+
+if ! which rbenv-whatis >/dev/null 2>&1; then
+  {
+    echo "rbenv-whatis plugin not installed, please run:"
+    echo
+    echo "git clone https://github.com/rkh/rbenv-whatis.git $RBENV_ROOT/plugins/rbenv-whatis"
+  } >&2
+
+  exit 1
+fi
+
+if [ $# -eq 0 ]; then
+  command rbenv help using >&2
+  exit 1
+fi
+
+version=`command rbenv whatis "$1"`; shift
+RBENV_VERSION="$version" exec "$@"
