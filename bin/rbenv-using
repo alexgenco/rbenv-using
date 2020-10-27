@@ -5,16 +5,9 @@
 # Run a shell command with a specified Ruby version activated.
 
 set -euo pipefail
-[ -n "${RBENV_DEBUG:-}" ] && set -x
 
-if ! which rbenv-whatis >/dev/null 2>&1; then
-  {
-    echo "rbenv-whatis plugin not installed, please run:"
-    echo
-    echo "git clone git@github.com:rkh/rbenv-whatis.git $RBENV_ROOT/plugins/rbenv-whatis"
-  } >&2
-
-  exit 1
+if [ -n "${RBENV_DEBUG:-}" ]; then
+  set -x
 fi
 
 if [ $# -le 1 ]; then
@@ -22,5 +15,27 @@ if [ $# -le 1 ]; then
   exit 1
 fi
 
-version=`command rbenv whatis "$1"`; shift
+if which rbenv-whatis >/dev/null 2>&1; then
+  version=`command rbenv whatis "$1"`
+elif [ "$1" = "current" ]; then
+  version=`command rbenv version-name`
+elif [ "$1" = "global" ]; then
+  version=`command rbenv global`
+elif [ "$1" = "local" ]; then
+  version=`command rbenv local`
+elif command rbenv versions --bare 2>/dev/null | grep -Fxq "$1"; then
+  version="$1"
+else
+  {
+    echo "Ruby version '$1' is not installed."
+    echo
+    echo "Version prefix matching requires \`rbenv-whatis'. Install it with:"
+    echo
+    echo "git clone git@github.com:rkh/rbenv-whatis.git $RBENV_ROOT/plugins/rbenv-whatis"
+  } >&2
+
+  exit 1
+fi
+
+shift
 RBENV_VERSION="$version" exec -- "$@"
