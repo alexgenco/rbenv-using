@@ -5,10 +5,10 @@ rbenv plugin to run a shell command with a specified Ruby version activated.
 ## Installation
 
 ```shell
-mkdir -p $RBENV_ROOT/plugins
-git clone git@github.com:rkh/rbenv-whatis.git $RBENV_ROOT/plugins/rbenv-whatis
-git clone git@github.com:alexgenco/rbenv-using.git $RBENV_ROOT/plugins/rbenv-using
+curl -s https://raw.githubusercontent.com/alexgenco/rbenv-using/main/install.sh | sh -
 ```
+
+This will install both `rbenv-using` and `rbenv-whatis` into `$RBENV_ROOT/plugins`.
 
 ## Examples
 
@@ -16,11 +16,11 @@ git clone git@github.com:alexgenco/rbenv-using.git $RBENV_ROOT/plugins/rbenv-usi
 # Using a specific version:
 rbenv using 2.7.2 ruby -v
 
-# Using a fuzzy version identifier:
+# Using a version prefix (requires `rbenv-whatis`):
 rbenv using 3 ruby -v
 ```
 
-Usage in shebang lines:
+Usage in script shebangs:
 
 ```bash
 #!/usr/bin/env rbenv using 3 ruby
