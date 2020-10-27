@@ -10,6 +10,12 @@ if [ -n "${RBENV_DEBUG:-}" ]; then
   set -x
 fi
 
+# Provide rbenv completions
+if [ "$*" = "--complete" ]; then
+  echo system
+  exec command rbenv versions --bare
+fi
+
 if [ $# -le 1 ]; then
   command rbenv help using >&2
   exit 1
@@ -38,4 +44,6 @@ else
 fi
 
 shift
+[ "$1" = "--" ] && shift
+
 RBENV_VERSION="$version" exec -- "$@"
